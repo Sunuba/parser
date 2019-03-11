@@ -9,6 +9,6 @@ car_names = '//div[@class="products-container"]//div[@class="products"][3]//div[
 atts_code = '//div[@class="products-container"]//div[@class="products"][3]//div[@class="products-description"]//div[@class="products-attributes"]//p[@class="products-attributes-i"]//text()'
 
 
-car_names = parser.get_data(link_code)
+car_names = parser.get_data(car_names)
 
 print(car_names)
