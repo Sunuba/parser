@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import requests
 from lxml import html
 import re
@@ -15,7 +18,7 @@ class Parser():
     def create_tree(self):
         headers = self.get_headers()
         page = requests.get(self.link, headers=headers)
-        return html.fromstring(page.content)
+        return html.fromstring(page.content.decode('utf-8'))
 
     def get_data(self, html_code):
         tree = self.create_tree()
