@@ -23,3 +23,20 @@ class Parser():
     def get_data(self, html_code):
         tree = self.create_tree()
         return tree.xpath(html_code)
+
+    def prepare(self, string):
+        parts = string.split('.')
+        if len(parts) == 3:
+            element = parts[0]
+            tag = parts[1]
+            name = parts[2]
+            return '/'+element+'[contains(@'+tag+', "'+name+'")]'
+        else:
+            return '/' + string
+
+    def prepare_sections(self, string, indicator):
+        sections = string.split('/')
+        final_code = '/'
+        for section in sections:
+            final_code = final_code + self.prepare(section)
+        return final_code + '/' + indicator
