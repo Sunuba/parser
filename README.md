@@ -85,3 +85,84 @@ ParserClass will help you to scrap information from any website.
     “You can never get a cup of tea large enough or a book long enough to suit me.”
     “Only in the darkness can you see the stars.”
     “When one door of happiness closes, another opens; but often we look so long at the closed door that we do not see the one which has been opened for us.”
+
+
+## Azərbaycan Dilində
+
+1. Bu nümunədə oxu.az saytından xəbər başlıqlarını əldə etməyi göstərəcəm. İlk öncə saytın koduna baxıb, bizə lazım olan
+məlumatı çıxarmalıyıq. Oxu.az-ın koduna baxdıqda aydın olur ki, bizə lazım olan məlumatlar aşağıda göstərilən kodlarda
+yerləşir: 
+
+        <section class="news-list">
+                    <div class="news-i">
+                        <a class="news-i-inner" href="/society/303149">
+                            <div class="news-i-img-container">
+                                <div class="news-i-img" style="background-image: url(https://assets.oxu.az/uploads/W1siZiIsIjIwMTkvMDMvMTIvMjEvNTAvNDkvODE5NDRjZDQtYTQxNi00MDE1LWE0MjItNzM4Y2E1MGQwYTU0LzUzNzIwMDY4XzIzMzU4NDU1NjMxMjcyMzZfOTAzNDM2MDg0MjY2OTI2MDgwMF9uLmpwZyJdLFsicCIsImVuY29kZSIsImpwZyIsIi1xdWFsaXR5IDgwIl0sWyJwIiwidGh1bWIiLCI2MjB4NDY1XHUwMDNlIl1d?sha=a1b653c35dbe463e)"></div>
+                            </div>
+                            <div class="news-i-content">
+                                <div class="when">
+                                    <div class="when-date">
+                                        <div class="date-day">12&nbsp</div>
+                                        <div class="date-month">Mar</div>
+                                        <div class="date-year">2019</div>
+                                    </div>
+                                    <div class="when-time">21:56</div>
+                                </div>
+                                <div class="title">Şamaxıda bayram tonqalları qalanıb</div>
+                                <div class="description"></div>
+                            </div>
+                        </a>
+                    ...
+        ...
+
+Biz "Şamaxıda bayram tonqalları qalanıb" yazılan hissəni götürmək istəyirik. Eynilə də saytda olan bütün başlıqları.
+Bu zaman yuxarıdan başlayaraq marşurutu çəkirik:
+
+    section.class.news-list/div.class.news-i/a/div.class.news-i-content/div.class.title
+
+yuxarıdakı marşuruta baxdıqda aydın olur ki, birinci elementin adı, sonra tag göstəricisi, sonra isə tag göstəricisinin
+dəyəri ifadə edilib. Yəni section elementinin news-list klas tag-ı.
+Digərləri də eyni qaydadadır. Daha sonra ən sonuncu elementin içərisindəki mətni götürəcəyimiz
+üçün göstəricimiz də 'text()' olmalıdır. Daha detallı məlumat üçün
+lxml haqqında oxuyun.
+
+Beləliklə obyektimizi yaradıb məlumat əldə edə bilərik
+
+    from ParserClass import Parser
+    
+    parser = Parser('https://oxu.az')
+    marshurut = 'section.class.news-list/div.class.news-i/a/div.class.news-i-content/div.class.title'
+    xeber_marshurutu = parser.prepare_sections(marshurut, 'text()')    
+    xeber_basliqlari = parser.get_data(xeber_marshurutu)
+    
+    for basliq in xeber_basliqlari:
+        print(basliq)
+
+
+Bu zaman aşağıdakı nəticəni əldə edəcəksiniz:
+
+    Azərbaycanda keçirilən “Hackathon”nun qalibi 4 min manat qazanacaq
+    Şamaxıda bayram tonqalları qalanıb
+    Lənkəranda 45 yaşlı kişi çayda boğuldu
+    Türkiyə səmada olan “Boeing 737 Max 8” təyyarələrini geri çağırıb
+    Sabah Abşeron və Sumqayıtın bir hissəsində qaz olmayacaq 
+    Meyitlərdən orqanların götürülməsi işini hansı qurum həyata keçirilməlidir?
+    Zülfiyyə Hüseynova Bakıdakı Qran-Pridə güləşəcək
+    Astarada iribuynuzlu heyvanlarda xəstəlik aşkar edilib - FOTO
+    Deputat: Ağa qara deməkdən usanın
+    Ən çirkli havası olan ölkələr açıqlandı
+    XİN: Paşinyanın “Qarabağ erməniliyi” fikri söz oyununa son qoydu
+    Azərbaycanlı kapitan Bosfor boğazını bağlamaqla hədələyir - VİDEO
+    Naxçıvanda binaların dam örtükləri təmir ediləcək
+    Binaların lift təsərrüfatı yaxşılaşdırılacaq - SƏRƏNCAM
+    Prezident iki şairə vəzifə verdi
+    Şahmat Olimpiya Oyunlarına bir qədər də yaxınlaşdı
+    İlham Əliyev Roma Papasına məktub göndərdi
+    Mərkəzi Bank Fransa bankı ilə müqavilə bağladı
+    Bakı Aeroportunda yeni texnologiyalar tətbiq ediləcək
+    Mehriban Əliyeva Nikola Sarkozi ilə görüşdü - YENİLƏNİB + FOTO
+    Bakıya uçan təyyarəyə külli miqdarda pul keçirmək istədi, saxlanıldı
+    Yollardakı xətlər yenilənir - VİDEO
+    Daha bir təyyarə qəzası: bu dəfə Çində - Ölənlər var
+
+
