@@ -6,6 +6,20 @@ ParserClass will help you to scrap information from any website.
 
     1. Create parser object
     2. visit website that you want to grab data from and create a "route" to that information
+        Example: Let's assume that your information resides inside the following structure:
+                <div class="sample-class">
+                    <span class="sample-text">Sample Text</span>
+                </div>
+        Then, your route will be div.class.sample-class/span.class.sample-text and 
+        your indicator will be text() - because you want to reach out the text in span.
+        so, sample_data = parser.prepare_sections('div.class.sample-class/span.class.sample-text', 'text()')
+        print(sample_data) will give you what you need.
+                Example 2:
+                <div>
+                    <span>Sample text</span>
+                </div>
+                would be div.span with text() indicator
+                sample_data = parser.prepare_sections('div.span', 'text()') will do the job
     3. use get_data() method to grab data
     4. that is it. Just print data, save or do whatever you want to do.
 
