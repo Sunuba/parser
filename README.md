@@ -20,7 +20,7 @@ ParserClass will help you to scrap information from any website.
     # Here I want to grab information from turbo.az/autos, that is why I initialize class with this link.
     # Now, let's say that I am focused on getting all the names of cars that is added as a new car, I mean the entry is
     # fresh, not a vip or any sort of other advertised content.
-    # car_names = //div[@class="products-container"]//div[@class="products"][3]//div[@class="products-description"]//p[@class="products-name"]//text()
+    # car_names = parser.prepare_sections('div.class.products-container/div.class.products/div.class.products-description/p.class.products-name', 'text()') 
     # is what I need in this case. It is in the source code, you can check it by yourself as well.
     # I use parser.get_data() class to retrieve data.
     # car_names = parser.get_data(car_names) - this will return pyton list
