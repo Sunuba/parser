@@ -35,7 +35,7 @@ class Parser():
             element = parts[0]
             tag = parts[1]
             name = parts[2]
-            return '/'+element+'[contains('+tag+', "'+name+'")]'
+            return '/'+element+'[contains('+tag+', ' + name + ')]'
         else:
             return '/' + string
 

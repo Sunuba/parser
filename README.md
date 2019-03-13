@@ -5,9 +5,10 @@
 
 
 **CHANGES**
-- To improve search **div.class.classname** changed to _**div.@class.classname**_. This enables to search by text inside
+- To improve search **div.class.classname** changed to _**div.@class."classname"**_. This enables to search by text inside
 any tag
 - Class name changed to **Parser** from _**ParserClass**_
+- Always wrap classname with double quotes. Example div.@class."classname"
 
 **HOW TO USE IT**
 
@@ -27,9 +28,9 @@ any tag
                 <div class="sample-class">
                     <span class="sample-text">Sample Text</span>
                 </div>
-        Then, your route will be div.@class.sample-class/span.@class.sample-text and 
+        Then, your route will be div.@class."sample-class"/span.@class."sample-text" and 
         your indicator will be text() - because you want to reach out the text in span.
-        so, sample_data = parser.prepare_sections('div.@class.sample-class/span.@class.sample-text', 'text()')
+        so, sample_data = parser.prepare_sections('div.@class."sample-class"/span.@class."sample-text"', 'text()')
         print(sample_data) will give you what you need.
                 Example 2:
                 <div>
@@ -51,13 +52,13 @@ any tag
     # Here I want to grab information from turbo.az/autos, that is why I initialize class with this link.
     # Now, let's say that I am focused on getting all the names of cars that is added as a new car, I mean the entry is
     # fresh, not a vip or any sort of other advertised content.
-    # car_names = parser.prepare_sections('div.@class.products-container/div.@class.products/div.@class.products-description/p.@class.products-name', 'text()') 
+    car_names = parser.prepare_sections('div.@class."products-container"/div.@class."products"//div.@class."products-description"/p.@class."products-name"', 'text()')
     # is what I need in this case. It is in the source code, you can check it by yourself as well.
     # I use parser.get_data() class to retrieve data.
-    # car_names = parser.get_data(car_names) - this will return pyton list
-    # print(car_names)
+    car_names = parser.get_data(car_names) #- this will return pyton list
+    print(car_names)
     # Here is the output:
-    # ['LADA (VAZ) Niva', 'Toyota Prius', 'Hyundai i30', 'Kia Optima', 'Chevrolet Aveo', 'Kia Optima', 'Land Rover RR Sport', 'Nissan Sunny', 'Mercedes E 320', 'LADA (VAZ) 2107', 'Mercedes C 180', 'LADA (VAZ) 2107', 'Toyota Prado', 'LADA (VAZ) 21013', 'Mercedes 190', 'GAZ 33021', 'Kia Cee`d', 'LADA (VAZ) 2107', 'LADA (VAZ) 21099', 'Mitsubishi Pajero', 'Mercedes C 180', 'Mercedes CLS 55 AMG', 'Mercedes E 240', 'BMW 528']
+    # ['Mini Countryman', 'Hyundai Santa Fe', 'GAZ Next A65R32-40', 'Land Rover RR Evoque', 'BMW M3', 'Mercedes S 350', 'Chevrolet Cruze', 'Hyundai Sonata', 'Mercedes C 230', 'Kia Cerato', 'Kia Optima', 'Mercedes E 240', 'LADA (VAZ) 2104', 'Hyundai Elantra', 'GMC Yukon', 'LADA (VAZ) 2107', 'Mercedes C 220', 'BMW 318', 'LADA (VAZ) 2107', 'Toyota Prado', 'Daewoo Gentra', 'Mercedes C 200', 'Mercedes C 220', 'Mitsubishi L 200', 'Volkswagen Jetta', 'LADA (VAZ) 2107', 'Toyota Camry', 'Mercedes E 280', 'Hyundai Tucson', 'Hyundai ix35', 'LADA (VAZ) 2108', 'BMW 520', 'Mercedes E 240', 'Mercedes GL 500', 'BMW 523', 'Hyundai Accent']
 
 
 **EXAMPLE 2**
@@ -185,4 +186,72 @@ Bu zaman aşağıdakı nəticəni əldə edəcəksiniz:
     Yollardakı xətlər yenilənir - VİDEO
     Daha bir təyyarə qəzası: bu dəfə Çində - Ölənlər var
 
+**NÜMUNƏ**
 
+Bu nümunə tap.az saytında olan reklam başlıqlarını götürür.
+    from Parser import Parser
+    
+    
+    parser = Parser('https://tap.az/all')
+    
+    product_name_route = 'div.@class.endless-products/div.@class.products-i/a.@class.products-link/div.@class.products-name'
+    product_names = parser.prepare_sections(product_name_route, 'text()')
+    product_name = parser.get_data(product_names)
+    print(product_name)
+    
+    for name in product_name:
+        print(name)
+    
+    Nəticə:
+    ['Böyüdücü məcun "Cennol"', 'Power bank "Xiaomi"', '"BMW F22" hava yastığı', 'Apple iPhone 5S', '4-otaqlı yeni tikili, 8 mkr., 179 m²', 'Dondurucu', 'Pianinolar', 'Həyət evi kirayə verilir, Qusar r.', 'Həyət evi kirayə verilir, Qusar r.', 'Soyuducu ', 'Uşaq avtomobili', '"Tissot" qol saatı', 'Su çəni', 'Mercedes 190, 1990 il', 'Haski', 'Obyekt icarəyə verilir, Gənclik m.', '3-otaqlı mənzil, Gənclik m., 58 m²', 'Konfet qabı', 'Mətbəx masası', '3-otaqlı yeni tikili, Həzi Aslanov m., 106 m²', 'CD-maqnitola', 'Apple MacBook Pro 15-inch, Mid 2012', 'Honda CR-V, 2005 год', 'Çörək qabı', '"Hyundai Elantra" diski', 'Apple iPhone 7 Red', '3-otaqlı yeni tikili, Həzi Aslanov m., 109 m²', 'Samsung Galaxy A6', 'Həyət evi kirayə verilir, Qusar r.', 'Kinroad, 2015 il', 'Lazer epilyasiya cihazları', 'Nasos', 'Ofis mebeli', 'Həyət evi, Zabrat 1 qəs.', 'Leagoo Kiicaa', '"Naviforce" qol saatı', 'Nissan Teana, 2008 il', '"Mercedes" diskləri - R18', '"Samsung" paltaryuyan', '"BMW F31" hava yastığı', '2-otaqlı yeni tikili, N. Nərmanov m., 106 m²', 'Həyət evi kirayə verilir, Qusar r.', '3-otaqlı mənzil, Sumqayıt ş., 72 m²', 'Mühərrik', '"Audemars Piguet" qol saatı', '"Volkswagen" qapı əlcəkləri', 'Həyət evi, Binəqədi qəs.', 'Avtomobil oturacaq üzlüyü']
+    Böyüdücü məcun "Cennol"
+    Power bank "Xiaomi"
+    "BMW F22" hava yastığı
+    Apple iPhone 5S
+    4-otaqlı yeni tikili, 8 mkr., 179 m²
+    Dondurucu
+    Pianinolar
+    Həyət evi kirayə verilir, Qusar r.
+    Həyət evi kirayə verilir, Qusar r.
+    Soyuducu 
+    Uşaq avtomobili
+    "Tissot" qol saatı
+    Su çəni
+    Mercedes 190, 1990 il
+    Haski
+    Obyekt icarəyə verilir, Gənclik m.
+    3-otaqlı mənzil, Gənclik m., 58 m²
+    Konfet qabı
+    Mətbəx masası
+    3-otaqlı yeni tikili, Həzi Aslanov m., 106 m²
+    CD-maqnitola
+    Apple MacBook Pro 15-inch, Mid 2012
+    Honda CR-V, 2005 год
+    Çörək qabı
+    "Hyundai Elantra" diski
+    Apple iPhone 7 Red
+    3-otaqlı yeni tikili, Həzi Aslanov m., 109 m²
+    Samsung Galaxy A6
+    Həyət evi kirayə verilir, Qusar r.
+    Kinroad, 2015 il
+    Lazer epilyasiya cihazları
+    Nasos
+    Ofis mebeli
+    Həyət evi, Zabrat 1 qəs.
+    Leagoo Kiicaa
+    "Naviforce" qol saatı
+    Nissan Teana, 2008 il
+    "Mercedes" diskləri - R18
+    "Samsung" paltaryuyan
+    "BMW F31" hava yastığı
+    2-otaqlı yeni tikili, N. Nərmanov m., 106 m²
+    Həyət evi kirayə verilir, Qusar r.
+    3-otaqlı mənzil, Sumqayıt ş., 72 m²
+    Mühərrik
+    "Audemars Piguet" qol saatı
+    "Volkswagen" qapı əlcəkləri
+    Həyət evi, Binəqədi qəs.
+    Avtomobil oturacaq üzlüyü
+
+
+    
