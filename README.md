@@ -1,8 +1,13 @@
 **INTRO**
 
-- ParserClass will help you to scrap information from any website.
+- Parser will help you to scrap information from any website.
 - Supports proxy
 
+
+**CHANGES**
+- To improve search **div.class.classname** changed to _**div.@class.classname**_. This enables to search by text inside
+any tag
+- Class name changed to **Parser** from _**ParserClass**_
 
 **HOW TO USE IT**
 
@@ -22,16 +27,16 @@
                 <div class="sample-class">
                     <span class="sample-text">Sample Text</span>
                 </div>
-        Then, your route will be div.class.sample-class/span.class.sample-text and 
+        Then, your route will be div.@class.sample-class/span.@class.sample-text and 
         your indicator will be text() - because you want to reach out the text in span.
-        so, sample_data = parser.prepare_sections('div.class.sample-class/span.class.sample-text', 'text()')
+        so, sample_data = parser.prepare_sections('div.@class.sample-class/span.@class.sample-text', 'text()')
         print(sample_data) will give you what you need.
                 Example 2:
                 <div>
                     <span>Sample text</span>
                 </div>
-                would be div.span with text() indicator
-                sample_data = parser.prepare_sections('div.span', 'text()') will do the job
+                would be div.@span with text() indicator
+                sample_data = parser.prepare_sections('div.@span', 'text()') will do the job
     3. use get_data() method to grab data
     4. that is it. Just print data, save or do whatever you want to do.
 
@@ -41,12 +46,12 @@
     In this example, I will demonstrate how to get data from turbo.az - a website where all cars are sold in Azerbaijan, 
     it has an huge database of cars.
     
-    from ParserClass import Parser
+    from Parser import Parser
     parser = Parser(link='https://www.turbo.az/autos')
     # Here I want to grab information from turbo.az/autos, that is why I initialize class with this link.
     # Now, let's say that I am focused on getting all the names of cars that is added as a new car, I mean the entry is
     # fresh, not a vip or any sort of other advertised content.
-    # car_names = parser.prepare_sections('div.class.products-container/div.class.products/div.class.products-description/p.class.products-name', 'text()') 
+    # car_names = parser.prepare_sections('div.@class.products-container/div.@class.products/div.@class.products-description/p.@class.products-name', 'text()') 
     # is what I need in this case. It is in the source code, you can check it by yourself as well.
     # I use parser.get_data() class to retrieve data.
     # car_names = parser.get_data(car_names) - this will return pyton list
@@ -76,8 +81,8 @@
     </div>    
     
     It is inside a div (class="quote"), inside a span (class="text") and I need to access text inside the last tag.
-    I quickly write my route like this: div.class.quote/span.class.text and indicator is text()
-    quote_route = parser.prepare_sections('div.class.quote/span.class.text', 'text()')
+    I quickly write my route like this: div.@class.quote/span.@class.text and indicator is text()
+    quote_route = parser.prepare_sections('div.@class.quote/span.@class.text', 'text()')
     quotes = parser.get_data(quote_route)
     print(quotes)
     And the result:
@@ -130,7 +135,7 @@ yerləşir:
 Biz "Şamaxıda bayram tonqalları qalanıb" yazılan hissəni götürmək istəyirik. Eynilə də saytda olan bütün başlıqları.
 Bu zaman yuxarıdan başlayaraq marşurutu çəkirik:
 
-    section.class.news-list/div.class.news-i/a/div.class.news-i-content/div.class.title
+    section.@class.news-list/div.@class.news-i/a/div.@class.news-i-content/div.@class.title
 
 yuxarıdakı marşuruta baxdıqda aydın olur ki, birinci elementin adı, sonra tag göstəricisi, sonra isə tag göstəricisinin
 dəyəri ifadə edilib. Yəni section elementinin news-list klas tag-ı.
@@ -140,13 +145,13 @@ lxml haqqında oxuyun.
 
 Beləliklə obyektimizi yaradıb məlumat əldə edə bilərik
 
-    from ParserClass import Parser
+    from Parser import Parser
     
     parser = Parser('https://oxu.az')
     
     # proksi ilə istifadə etmək üçün
     parser = Parser('https://oxu.az', use_proxy=True)
-    marshurut = 'section.class.news-list/div.class.news-i/a/div.class.news-i-content/div.class.title'
+    marshurut = 'section.@class.news-list/div.@class.news-i/a/div.@class.news-i-content/div.@class.title'
     xeber_marshurutu = parser.prepare_sections(marshurut, 'text()')    
     xeber_basliqlari = parser.get_data(xeber_marshurutu)
     

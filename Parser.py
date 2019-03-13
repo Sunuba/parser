@@ -35,7 +35,7 @@ class Parser():
             element = parts[0]
             tag = parts[1]
             name = parts[2]
-            return '/'+element+'[contains(@'+tag+', "'+name+'")]'
+            return '/'+element+'[contains('+tag+', "'+name+'")]'
         else:
             return '/' + string
 
@@ -50,9 +50,9 @@ class Parser():
         sec_conv = {'yes':'https', 'no':'http'}
         list_proxy = {}
         parser = Parser('https://free-proxy-list.net')
-        ip_route = 'table.id.proxylisttable/tbody/tr/td[1]'
-        port_route = 'table.id.proxylisttable/tbody/tr/td[2]'
-        security_route = 'table.id.proxylisttable/tbody/tr/td[7]'
+        ip_route = 'table.@id.proxylisttable/tbody/tr/td[1]'
+        port_route = 'table.@id.proxylisttable/tbody/tr/td[2]'
+        security_route = 'table.@id.proxylisttable/tbody/tr/td[7]'
         ip_prepare = parser.prepare_sections(ip_route, 'text()')
         port_prepare = parser.prepare_sections(port_route, 'text()')
         security_prepare = parser.prepare_sections(security_route, 'text()')
