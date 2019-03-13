@@ -1,14 +1,10 @@
-from ParserClass import Parser
+from Parser import Parser
 
+parser = Parser('https://oxu.az', use_proxy=True)
 
-parser = Parser(link='https://www.turbo.az/autos')
+header_route = 'section.class.news-list/div.class.news-i/a/div.class.news-i-content/div.class.title'
+header_prepare = parser.prepare_sections(header_route, 'text()')
+headers = parser.get_data(header_prepare)
 
-link_code = '//div[@class="products-container"]//div[@class="products"][3]//a//@href'
-price_code = '//div[@class="products-container"]//div[@class="products"][3]//div[@class="product-price"]//text()'
-car_names = '//div[@class="products-container"]//div[@class="products"][3]//div[@class="products-description"]//p[@class="products-name"]//text()'
-atts_code = '//div[@class="products-container"]//div[@class="products"][3]//div[@class="products-description"]//div[@class="products-attributes"]//p[@class="products-attributes-i"]//text()'
-
-
-car_names = parser.get_data(car_names)
-
-print(car_names)
+for header in headers:
+    print(header)
