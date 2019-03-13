@@ -1,10 +1,22 @@
 **INTRO**
 
-ParserClass will help you to scrap information from any website.
+- ParserClass will help you to scrap information from any website.
+- Supports proxy
+
 
 **HOW TO USE IT**
 
     1. Create parser object
+        from Parser import Parser
+        
+        parser = Parser('your-web-address')
+        
+        #if you want to use proxy, then
+        parser = parser('your-web-address', use_proxy=True)
+        
+        Note: When you use proxy, class will grab list of all proxies 
+        from https://free-proxy-list.net and randomly select one of them
+        and use it.
     2. visit website that you want to grab data from and create a "route" to that information
         Example: Let's assume that your information resides inside the following structure:
                 <div class="sample-class">
@@ -131,6 +143,9 @@ Beləliklə obyektimizi yaradıb məlumat əldə edə bilərik
     from ParserClass import Parser
     
     parser = Parser('https://oxu.az')
+    
+    # proksi ilə istifadə etmək üçün
+    parser = Parser('https://oxu.az', use_proxy=True)
     marshurut = 'section.class.news-list/div.class.news-i/a/div.class.news-i-content/div.class.title'
     xeber_marshurutu = parser.prepare_sections(marshurut, 'text()')    
     xeber_basliqlari = parser.get_data(xeber_marshurutu)
