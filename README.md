@@ -136,7 +136,7 @@ yerləşir:
 Biz "Şamaxıda bayram tonqalları qalanıb" yazılan hissəni götürmək istəyirik. Eynilə də saytda olan bütün başlıqları.
 Bu zaman yuxarıdan başlayaraq marşurutu çəkirik:
 
-    section.@class.news-list/div.@class.news-i/a/div.@class.news-i-content/div.@class.title
+    section.@class."news-list"/div.@class."news-i"/a/div.@class."news-i-content"/div.@class."title"
 
 yuxarıdakı marşuruta baxdıqda aydın olur ki, birinci elementin adı, sonra tag göstəricisi, sonra isə tag göstəricisinin
 dəyəri ifadə edilib. Yəni section elementinin news-list klas tag-ı.
@@ -152,7 +152,7 @@ Beləliklə obyektimizi yaradıb məlumat əldə edə bilərik
     
     # proksi ilə istifadə etmək üçün
     parser = Parser('https://oxu.az', use_proxy=True)
-    marshurut = 'section.@class.news-list/div.@class.news-i/a/div.@class.news-i-content/div.@class.title'
+    marshurut = 'section.@class."news-list"/div.@class."news-i"/a/div.@class."news-i-content"/div.@class."title"'
     xeber_marshurutu = parser.prepare_sections(marshurut, 'text()')    
     xeber_basliqlari = parser.get_data(xeber_marshurutu)
     
@@ -194,7 +194,7 @@ Bu nümunə tap.az saytında olan reklam başlıqlarını götürür.
     
     parser = Parser('https://tap.az/all')
     
-    product_name_route = 'div.@class.endless-products/div.@class.products-i/a.@class.products-link/div.@class.products-name'
+    product_name_route = 'div.@class."endless-products"/div.@class."products-i"/a.@class."products-link"/div.@class."products-name"'
     product_names = parser.prepare_sections(product_name_route, 'text()')
     product_name = parser.get_data(product_names)
     print(product_name)
